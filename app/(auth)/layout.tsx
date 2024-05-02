@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import SessionWrapper from "@/app/SessionProvider";
+import StoreProvider from "@/app/StoreProvider";
+import NavbarComponent from "@/Components/navbar/NavbarComponent";
+import {ErrorBoundary} from "next/dist/client/components/error-boundary";
+import Error from "@/app/(user)/error";
+import {Suspense} from "react";
+import Loading from "@/app/(user)/loading";
+import FooterComponent from "@/Components/footer/FooterComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +28,18 @@ export default function AuthLayout({
 }>) {
     return (
         <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <SessionWrapper>
+            <body className={inter.className}>
+            <StoreProvider>
+                <ErrorBoundary errorComponent={Error}>
+                    <Suspense fallback={<Loading/>}>{children}</Suspense>
+                </ErrorBoundary>
+            </StoreProvider>
+            <footer>
+                <FooterComponent/>
+            </footer>
+            </body>
+        </SessionWrapper>
         </html>
     );
 }

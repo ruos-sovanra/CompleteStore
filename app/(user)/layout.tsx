@@ -8,6 +8,8 @@ import {Suspense} from "react";
 import Loading from "@/app/(user)/loading";
 import Error from "@/app/(user)/error";
 import FooterComponent from "@/Components/footer/FooterComponent";
+import SessionWrapper from "@/app/SessionProvider";
+import StoreProvider from "@/app/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,17 +29,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    <SessionWrapper>
       <body className={inter.className}>
+      <StoreProvider>
       <header>
         <NavbarComponent />
       </header>
       <ErrorBoundary errorComponent={Error}>
           <Suspense fallback={<Loading/>}>{children}</Suspense>
       </ErrorBoundary>
+      </StoreProvider>
       <footer>
           <FooterComponent />
       </footer>
       </body>
+        </SessionWrapper>
     </html>
   );
 }

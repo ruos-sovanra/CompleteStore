@@ -32,7 +32,7 @@ const NavigationBar = () => {
                         </button>
                     </>
                 ) : (
-                    <button onClick={() => router.push('/login')} className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">
+                    <button onClick={() => router.push('/auth/login')} className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">
                         Sign In
                     </button>
                 )

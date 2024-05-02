@@ -26,7 +26,7 @@ const ActivateConfirmEmailPage = (props: Props) => {
                     Your email confirmed with my api! you can go to login page by press below button!
                 </p>
                 {/* Button */}
-                <Button title="Login" onClick={()=>router.push("/login")}  classname="my-8"/>
+                <Button title="Login" onClick={()=>router.push("/auth/login")}  classname="my-8"/>
 
             </section>
         </main>

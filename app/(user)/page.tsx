@@ -19,7 +19,6 @@ export default function Home() {
   return (
     <main className="flexs">
         <HeroSection />
-        <CategoryComponent />
         <ProductPage />
     </main>
   );

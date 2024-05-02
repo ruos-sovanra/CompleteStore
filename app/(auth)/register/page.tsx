@@ -38,9 +38,9 @@ const validationSchema = Yup.object().shape({
     last_name: Yup.string().required('Required'),
 });
 
-const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL_LOCALHOST || '';
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const [formData, setFormData] = useState<FormDataRegister>({
         email: '',
         password1: '',
@@ -53,7 +53,7 @@ const LoginPage = () => {
 
     const handleRegister = async (values: ValueTypes) => {
         try {
-            const res = await fetch(`${BaseUrl}user/register/`, {
+            const res = await fetch(`${BaseUrl}register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -157,4 +157,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;
