@@ -11,7 +11,7 @@ export const productApi = ecommerceApi.injectEndpoints({// The name of the slice
         }),
         // get single product
         getProductById: builder.query<any, number>({
-            query: (id) => `/api/products/${id}/`,
+            query: (id) => `products/${id}/`,
         }),
         getProductByProfile: builder.query<any, { page: number; pageSize: number }>({
             query: ({page = 1, pageSize = 10}) =>
@@ -44,6 +44,20 @@ export const productApi = ecommerceApi.injectEndpoints({// The name of the slice
                 method: "DELETE",
             }),
         }),
+        getMyProducts: builder.query<any, { page: number; pageSize: number }>({
+            query: ({page = 1, pageSize = 10}) =>
+                `products/my_products/?page=${page}&page_size=${pageSize}`,
+        }),
+        getProductImages: builder.query<any, { page: number; pageSize: number }>({
+            query: ({page = 1, pageSize = 10}) =>
+                `file/product/?page=${page}&page_size=${pageSize}`,
+        }),
+        getCategoryImages: builder.query<any, { page: number; pageSize: number }>({
+            query: ({page = 1, pageSize = 10}) =>
+                `file/icon/?page=${page}&page_size=${pageSize}`,
+        }),
+
+
     }),
     overrideExisting: false,
 });
@@ -54,4 +68,7 @@ export const {
     useCreateProductMutation,
     useUpdateProductMutation,
     useDeleteProductMutation,
+    useGetMyProductsQuery,
+    useGetProductImagesQuery,
+    useGetCategoryImagesQuery,
 } = productApi;

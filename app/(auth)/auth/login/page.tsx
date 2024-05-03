@@ -6,7 +6,8 @@ import * as Yup from 'yup';
 import style from './style.module.css';
 import {fetchUserProfile} from "@/redux/feature/userProfile/userProfileSlice";
 import {useEffect} from "react";
-import {useAppDispatch} from "@/redux/hook";
+import {useAppDispatch, useAppSelector} from "@/redux/hook";
+import {selectToken, setAccessToken} from "@/redux/feature/auth/authSlice";
 
 type FormValues = {
     email: string;
@@ -28,9 +29,9 @@ const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL_LOCALHOST || '';
 const LoginPage = () => {
     const router = useRouter();
     const { data: session } = useSession();
-    console.log("Session Log",session);
     const dispatch = useAppDispatch();
-
+    const token = useAppSelector(selectToken);
+    console.log("Token from Redux store", token);
 
     useEffect(() => {
         dispatch(fetchUserProfile());
@@ -49,25 +50,25 @@ const LoginPage = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(values),
-            });
+            }).then((res) => res.json())
+                .then((data) => {
+                    console.log("Data in jwt test: ", data);
 
-            const data = await response.json();
-            console.log("Response When Login"+data);
+                    dispatch(setAccessToken(data.accessToken));
+                    router.push('/');
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
-            if (response.ok) {
-                // Handle success
-                router.push('/');
-            } else {
-                // Handle error
-            }
+
         } catch (error) {
             console.error('Login error:', error);
         }
     };
 
     return (
-        <main className={style.container}>
-            <div className="flex min-h-full flex-1">
+            <main className="flex min-h-full flex-1">
                 <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
@@ -107,6 +108,7 @@ const LoginPage = () => {
                                                         required
                                                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                     />
+                                                    <ErrorMessage name="email" component="div" className={`${style.error}`} />
                                                 </div>
                                             </div>
 
@@ -124,6 +126,7 @@ const LoginPage = () => {
                                                         required
                                                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                     />
+                                                    <ErrorMessage name="password" component="div" className={`${style.error}`} />
                                                 </div>
                                             </div>
 
@@ -177,13 +180,19 @@ const LoginPage = () => {
                                         href="#"
                                         className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
                                     >
-                                        <svg className="h-5 w-5" aria-hidden="true" fill="currentColor"
-                                             viewBox="0 0 20 20">
-                                            <path
-                                                d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             viewBox="0 0 256 262">
+                                            <path fill="#4285F4"
+                                                  d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"/>
+                                            <path fill="#34A853"
+                                                  d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"/>
+                                            <path fill="#FBBC05"
+                                                  d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z"/>
+                                            <path fill="#EB4335"
+                                                  d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"/>
                                         </svg>
                                         <span className="text-sm font-semibold leading-6"
-                                              onClick={() => signIn("google")}>Twitter</span>
+                                              onClick={() => signIn("google")}>Google</span>
                                     </a>
 
                                     <a
@@ -209,13 +218,12 @@ const LoginPage = () => {
                 <div className="relative hidden w-0 flex-1 lg:block">
                     <img
                         className="absolute inset-0 h-full w-full object-cover"
-                        src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+                        src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1950&q=80"
                         alt=""
                     />
                 </div>
-            </div>
+            </main>
 
-        </main>
     );
 };
 

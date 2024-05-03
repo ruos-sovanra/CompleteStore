@@ -6,8 +6,8 @@ import {ecommerceApi} from "@/redux/api";
 export const makeStore = () => {
     return configureStore({
         reducer:{
-            userProfile: userProfileSlice,
             [ecommerceApi.reducerPath]: ecommerceApi.reducer,
+            userProfile: userProfileSlice,
             auth: authSlice,
         },
         middleware: (getDefaultMiddleware) =>

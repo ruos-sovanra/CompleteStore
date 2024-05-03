@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "@/redux/store";
 
 const initialState = {
@@ -17,4 +17,6 @@ const authSlice = createSlice({
 
 export const { setAccessToken } = authSlice.actions;
 export default authSlice.reducer;
+
+// customize selector for easy component access
 export const selectToken = (state: RootState) => state.auth.token;

@@ -1,8 +1,9 @@
 
 import HeroSection from "@/Components/hero/HeroSection";
-import CategoryComponent from "@/Components/Category/CategoryComponent";
+
 import ProductPage from "@/Components/product/productPage";
 import {Metadata} from "next";
+
 
 export const metadata: Metadata = {
     title: "CSTAD Ecommerce",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     },
 }
 export default function Home() {
-  return (
+    return (
     <main className="flexs">
         <HeroSection />
         <ProductPage />

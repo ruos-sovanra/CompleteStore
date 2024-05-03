@@ -13,7 +13,7 @@ const ProductPage = () => {
         page: page,
         pageSize: 10
     });
-    const products: Product[] = data?.results || [];
+        const products: Product[] = data?.results || [];
     const total: number = data?.total || 0;
     const router = useRouter();
 

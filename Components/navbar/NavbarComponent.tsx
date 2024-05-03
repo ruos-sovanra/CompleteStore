@@ -3,6 +3,9 @@ import { IoIosMenu } from "react-icons/io";
 import { useState } from "react";
 import Link from "next/link";
 import NavigationBar from "@/Components/navbar/NavigationBar";
+import {signOut, useSession} from "next-auth/react";
+import Image from "next/image";
+import {cookies} from "next/headers";
 
 const NavbarComponent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,7 +14,7 @@ const NavbarComponent = () => {
         setIsMenuOpen(!isMenuOpen);
     };
     return (
-        <nav className="flex justify-between items-center w-full px-8  mx-auto shadow-md  fixed top-0">
+        <nav className="flex justify-between items-center w-full px-8 mx-auto shadow-md  fixed top-0 z-50">
             <div>
                 <img className="w-16 cursor-pointer" src="https://cdn-icons-png.flaticon.com/512/5968/5968204.png" alt="..." />
             </div>
@@ -37,9 +40,9 @@ const NavbarComponent = () => {
             </div>
             <div className="flex items-center gap-6">
                 <div className="hidden md:inline-flex">
-                    <NavigationBar />
+                    <NavigationBar/>
                 </div>
-                <IoIosMenu onClick={onToggleMenu} className="text-3xl cursor-pointer md:hidden" />
+                <IoIosMenu onClick={onToggleMenu} className="text-3xl cursor-pointer md:hidden"/>
             </div>
         </nav>
     );

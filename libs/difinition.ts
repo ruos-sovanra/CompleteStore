@@ -34,7 +34,7 @@ export type ProductType = {
         name: string;
         icon: string;
     };
-    readonly id: string;
+     id: number;
     name: string;
     desc: string;
     image ?: string;
