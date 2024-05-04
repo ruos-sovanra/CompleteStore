@@ -50,7 +50,7 @@ const ProductPage = () => {
             <div className="flex flex-wrap justify-center gap-4">
                 {products.map((product) => (
                     <CardProduct onClick={() => router.push(`/product/${product.id}`)} key={product.id}
-                                 image={product.image} name={product.name} price={product.price}
+                                 image={product.image} name={product.name} id={product.id} price={product.price}
                                  seller={product.seller}/>
                 ))}
             </div>

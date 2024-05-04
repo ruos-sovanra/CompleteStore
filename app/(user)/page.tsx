@@ -3,6 +3,8 @@ import HeroSection from "@/Components/hero/HeroSection";
 
 import ProductPage from "@/Components/product/productPage";
 import {Metadata} from "next";
+import {useAppDispatch, useAppSelector} from "@/redux/hook";
+import {selectProducts} from "@/redux/feature/cart/cartSlice";
 
 
 export const metadata: Metadata = {
@@ -17,6 +19,7 @@ export const metadata: Metadata = {
     },
 }
 export default function Home() {
+
     return (
     <main className="flexs">
         <HeroSection />

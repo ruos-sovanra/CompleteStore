@@ -67,7 +67,7 @@ const ShopPage = () => {
     };
     const handleView = (product: ProductType) => {
         setSelectedProduct(product);
-        router.push(`/view/${product.id}`);
+        router.push(`/product/${product.id}`);
     }
 
     const confirmDelete = async () => {

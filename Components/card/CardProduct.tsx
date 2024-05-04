@@ -1,14 +1,20 @@
+import {useAppDispatch, useAppSelector} from "@/redux/hook";
+import {addToCart, selectProducts} from "@/redux/feature/cart/cartSlice";
+
 type CardProductProps = {
     image: string;
     name: string;
     price: number;
     onClick?: () => void;
     seller: string;
+    id:number
 }
-const CardProduct = ({image, name,seller, price,onClick}:CardProductProps) =>{
+const CardProduct = ({id,image, name,seller, price,onClick}:CardProductProps) =>{
+    const dispatch = useAppDispatch();
+
     return (
 
-            <section className="card" onClick={onClick}>
+            <section className="card" >
                 <div className="image-container">
                     <img className="w-full h-full object-cover"
                          src={image} alt={name}/>
@@ -28,7 +34,7 @@ const CardProduct = ({image, name,seller, price,onClick}:CardProductProps) =>{
                     </span>
                     </div>
                     <div className="mt-5 flex gap-2">
-                        <button className="button-style">Add to Cart</button>
+                        <button onClick={()=> dispatch(addToCart({id,name,image,price}))} className="button-style">Add to Cart</button>
                     </div>
                 </div>
             </section>

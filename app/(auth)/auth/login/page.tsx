@@ -8,6 +8,7 @@ import {fetchUserProfile} from "@/redux/feature/userProfile/userProfileSlice";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "@/redux/hook";
 import {selectToken, setAccessToken} from "@/redux/feature/auth/authSlice";
+import {values} from "lodash";
 
 type FormValues = {
     email: string;
@@ -38,9 +39,6 @@ const LoginPage = () => {
     }, []);
 
 
-    if (session){
-        router.push('/');
-    }
 
     const handleSubmit = async (values: FormValues) => {
         try {

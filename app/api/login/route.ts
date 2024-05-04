@@ -4,8 +4,10 @@ import {serialize} from "cookie";
 
 
 
+
 export async function POST(req: NextRequest) {
     const body = await req.json();
+    console.log("Log from login",body)
     const {email, password} = body;
 
     const response = await fetch(`${process.env.BASE_URL}user/login/`,{
@@ -13,6 +15,8 @@ export async function POST(req: NextRequest) {
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify({email, password})
     })
+
+
 
     if(!response.ok){
         return NextResponse.json({
@@ -28,25 +32,19 @@ export async function POST(req: NextRequest) {
     const accessToken = data?.access_token || null;
     const refreshToken = data?.refresh_token || null;
 
-    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || "refresh"
+    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || 'refresh'
     const serialized = serialize(cookieName, refreshToken,{
-        httpOnly: true,
+        httpOnly:true,
         secure: process.env.NODE_ENV === "production",
         path: "/",
         sameSite: "lax"
     })
 
-
     return NextResponse.json({
         user: user,
-        accessToken:accessToken
-    },
-        {
-            status:200,
-            headers: {
-                "Set-Cookie": serialized
-            }
-        })
-
-
+        accessToken: accessToken
+    },{
+        status: response.status,
+        headers: {"Set-Cookie": serialized}
+    })
 }

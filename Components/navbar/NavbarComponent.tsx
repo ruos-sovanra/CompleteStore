@@ -25,7 +25,7 @@ const NavbarComponent = () => {
                         <Link className="hover:text-gray-500" href="/">Home</Link>
                     </li>
                     <li>
-                        <Link className="hover:text-gray-500" href={'/product'}>Products</Link>
+                        <Link className="hover:text-gray-500" href={'/shop'}>Shop</Link>
                     </li>
                     <li>
                         <Link className="hover:text-gray-500" href="/about">About</Link>

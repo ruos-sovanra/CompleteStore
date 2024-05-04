@@ -50,5 +50,11 @@ export type Product = {
     image: string;
     seller: string;
 }
-
+export type CartProductType = {
+    name: string;
+    image: string;
+    price: number;
+    id: number;
+    onClick?: () => void;
+};
 export const BASE_URL = "https://store.istad.co"

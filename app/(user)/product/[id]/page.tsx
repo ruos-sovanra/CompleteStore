@@ -1,4 +1,7 @@
+
 import {Metadata, ResolvingMetadata} from "next";
+
+
 
 export type PropsParams = {
     params: {
@@ -38,8 +41,6 @@ export async function generateMetadata(
 
 const PageDetail = async (props:PropsParams) => {
     const data = await getData(props.params.id);
-    // const [active, setActive] = useState(active);
-    // const [active, setActive] = useState<string | null>("");
     return (
         <main className="container mx-5 mt-20">
             <section className="flex flex-col justify-between lg:flex-row gap-16 lg:items-center">
@@ -66,7 +67,7 @@ const PageDetail = async (props:PropsParams) => {
                             <span className='py-4 px-6 rounded-lg'>1</span>
                             <button className="bg-gray-200 py-2 px-3 text-3xl text-violet-600 rounded-lg">+</button>
                         </div>
-                        <button className="bg-violet-400 text-white font-semibold py-3 px-6 h-full rounded-lg md:px-16 md:py-3">Add to Cart</button>
+                        <button  className="bg-violet-400 text-white font-semibold py-3 px-6 h-full rounded-lg md:px-16 md:py-3">Add to Cart</button>
                     </div>
                 </div>
             </section>
