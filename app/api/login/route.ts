@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {serialize} from "cookie";
+import {useSession} from "next-auth/react";
 
 
 
@@ -10,6 +11,7 @@ export async function POST(req: NextRequest) {
     console.log("Log from login",body)
     const {email, password} = body;
 
+    const session = useSession()
     const response = await fetch(`${process.env.BASE_URL}user/login/`,{
         method: "POST",
         headers: {"Content-Type" : "application/json"},
@@ -26,6 +28,8 @@ export async function POST(req: NextRequest) {
                 status: response.status
             })
     }
+
+    console.log("Log from login route for session",session)
 
     const data = await response.json();
     const user = data?.user || null;

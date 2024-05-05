@@ -1,5 +1,6 @@
 import {ecommerceApi} from "@/redux/api";
 
+
 export const cartApi = ecommerceApi.injectEndpoints({
     endpoints: (builder) => ({
         // get all products
@@ -29,9 +30,37 @@ export const cartApi = ecommerceApi.injectEndpoints({
                 method: 'DELETE',
             }),
         }),
+        incrementQuantity: builder.mutation<any, { orderId: number, productId: number, quantity: number }>({
+            query: ({orderId, productId, quantity}) => ({
+                url: `user/orders/${orderId}`,
+                method: "PUT",
+                body: {
+                    order_items: [
+                        {
+                            product: productId,
+                            quantity: quantity
+                        }
+                    ]
+                },
+            }),
+        }),
+        decrementQuantity: builder.mutation<any, { orderId: number, productId: number, quantity: number }>({
+            query: ({orderId, productId, quantity}) => ({
+                url: `user/orders/${orderId}`,
+                method: "PUT",
+                body: {
+                    order_items: [
+                        {
+                            product: productId,
+                            quantity: quantity
+                        }
+                    ]
+                },
+            }),
+        }),
 
     }),
     overrideExisting: false,
 });
 
-export const { useGetCartQuery, useGetCartByIdQuery, useGetCartByProfileQuery,useAddToCartMutation,useRemoveFromCartMutation } = cartApi;
+export const { useGetCartQuery, useGetCartByIdQuery, useGetCartByProfileQuery,useAddToCartMutation,useRemoveFromCartMutation,useIncrementQuantityMutation,useDecrementQuantityMutation } = cartApi;

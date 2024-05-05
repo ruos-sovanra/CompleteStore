@@ -29,6 +29,13 @@ const cartSlice = createSlice({
 		removeFromCart: (state, action: PayloadAction<{ id: number }>) => {
 			state.products = state.products.filter(product => product.id !== action.payload.id);
 		},
+		incrementQuantity: (state, action: PayloadAction<{ id: number }>) => {
+			const productInCart = state.products.find(product => product.id === action.payload.id);
+
+			if (productInCart) {
+				productInCart.quantity += 1;
+			}
+		},
 	},
 });
 

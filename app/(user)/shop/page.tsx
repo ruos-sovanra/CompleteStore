@@ -4,7 +4,7 @@ import ShopPage from "@/Components/shop/ShopPage";
 const Shop = () => {
 
     return (
-        <section className="mx-7 mt-[70px]">
+        <section className="mx-8 mt-[70px]">
             <ShopPage />
         </section>
     )

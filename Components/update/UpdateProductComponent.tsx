@@ -51,10 +51,6 @@ const UpdateProductComponent = ({product }:UpdateProductProps) => {
         return null; // Or render some error message
     }
 
-    if (!product) {
-        return null; // Or render some error message
-    }
-
     const initialValues: UpdateProductType = {
         id: product?.id,
 

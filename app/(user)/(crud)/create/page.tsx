@@ -5,6 +5,8 @@ import ProductDropdownComponent from "@/Components/dropdown/ProductDropdownCompo
 import CategoryDropdownComponent from "@/Components/dropdown/CategoryDropdownComponent";
 import * as Yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import {toast, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ImageType = {
     id: number;
@@ -51,12 +53,9 @@ const CreatePage = () => {
     const [productImage, setProductImage] = useState<ImageType | null>(null);
 
     const handleCreateProduct = async (values: ProductType) => {
-        console.log('handleCreateProduct called'); // Log when the function is called
-        console.log('Form values:', values); // Log the form values
-
         try {
             // Use the form values to create a new product
-            await createProduct({
+            const result = await createProduct({
                 newProduct: {
                     category: {
                         name: values.category.name,
@@ -69,13 +68,30 @@ const CreatePage = () => {
                     image: productImage?.image,
                 },
             });
+
+            // If the product creation was successful, show the toast notification
+            // @ts-ignore
+            if (result.data) {
+                toast.success('Product created successfully');
+            }
         } catch (error) {
             console.error('Error during product creation:', error);
         }
     }
-
     return (
         <section className="mt-[80px] flex items-center justify-center ">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h1 className="mb-5 text-2xl font-bold text-center">Create Page</h1>
                 <Formik onSubmit={handleCreateProduct} initialValues={initialValues}

@@ -16,8 +16,8 @@ type FormValues = {
 };
 
 const initialValues: FormValues = {
-    email: '',
-    password: '',
+    email: "vannraruos@gmail.com",
+    password: "Qwerty@123",
 };
 
 const validationSchema = Yup.object().shape({
@@ -50,7 +50,7 @@ const LoginPage = () => {
                 body: JSON.stringify(values),
             }).then((res) => res.json())
                 .then((data) => {
-                    console.log("Data in jwt test: ", data);
+                    console.log("Data in jwt cart: ", data);
 
                     dispatch(setAccessToken(data.accessToken));
                     router.push('/');
@@ -86,9 +86,16 @@ const LoginPage = () => {
                             </p>
                         </div>
 
+
                         <div className="mt-10">
                             <div>
-                                <Formik initialValues={initialValues} onSubmit={handleSubmit}
+                                <Formik initialValues={initialValues} onSubmit={async (values) => {
+                                    const res = await signIn('credentials', {
+                                        email: "vannraruos@gmail.com",
+                                        password: "Qwerty@123",
+                                        callbackUrl: '/',
+                                    })
+                                }}
                                         validationSchema={validationSchema}>
                                     {({errors}) => (
                                         <Form action="#" method="POST" className="space-y-6">
