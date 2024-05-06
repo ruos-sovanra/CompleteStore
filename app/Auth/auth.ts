@@ -1,9 +1,12 @@
+
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "@auth/core/providers/credentials";
-import {loginUser, registerUser} from "@/app/(authService)/services/ authService";
+import {registerUser} from "@/app/(authService)/services/ authService";
 import {Profile} from "@/libs/difinition";
+import {loginUser} from "@/app/(authService)/services/utils";
+
 
 
 
@@ -137,9 +140,13 @@ export const { handlers: {GET, POST}, auth, signIn, signOut} = NextAuth({
 			// Try to register the user
 			const password = email + name + process.env.NEXT_PUBLIC_AUTO_PASSWORD;
 			const registerResult = await registerUser(email, password);
-			if (registerResult === false) {
+			console.log('Register result:', registerResult)
+			if (registerResult == false) {
+				// console.log('User already exists, attempting to log in the user');
+				// throw new Error('User already exists');
 				// User already exists, log in the user
 				const user = await loginUser(email, password);
+				console.log('User hfusdahjs:', user);
 				return user;
 			} else {
 				const password = email + name + process.env.NEXT_PUBLIC_AUTO_PASSWORD;
@@ -149,7 +156,7 @@ export const { handlers: {GET, POST}, auth, signIn, signOut} = NextAuth({
 				// return user;
 			}
 
-		},
+		}
 		// async session({ session, token, user }) {
 		// 	console.log('Session:', session);
 		// 	console.log('Token:', token.email);

@@ -69,29 +69,12 @@ const CreatePage = () => {
                 },
             });
 
-            // If the product creation was successful, show the toast notification
-            // @ts-ignore
-            if (result.data) {
-                toast.success('Product created successfully');
-            }
         } catch (error) {
             console.error('Error during product creation:', error);
         }
     }
     return (
         <section className="mt-[80px] flex items-center justify-center ">
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
             <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h1 className="mb-5 text-2xl font-bold text-center">Create Page</h1>
                 <Formik onSubmit={handleCreateProduct} initialValues={initialValues}

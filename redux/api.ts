@@ -1,21 +1,22 @@
+// Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type {RootState} from "@/redux/store";
+import { RootState } from "./store";
 import {setAccessToken} from "@/redux/feature/auth/authSlice";
 
+// initialize an empty api service that we'll inject endpoints into later as needed
 
 // Setting up prepareHeaders to include the token in the headers
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-        const token = (getState() as RootState).auth.token
+        const token = (getState() as RootState).auth.token;
         // if we have a token, let's set the authorization header
         if (token) {
-            headers.set('authorization', `Bearer ${token}`)
+            headers.set("authorization", `Bearer ${token}`);
         }
-        return headers
+        return headers;
     },
-})
-
+});
 
 // args: for the request details // api: for Redux api object // extraOptions: for additional
 const baseQueryWithReAuth = async (args: any, api: any, extraOptions: any) => {
@@ -38,11 +39,13 @@ const baseQueryWithReAuth = async (args: any, api: any, extraOptions: any) => {
             });
             const data = await res.json();
             console.log(data);
-        } }  return result};
+        }
+    }
+    return result;
+};
 
-// initialize an empty api service that we'll inject endpoints into later as needed
 export const ecommerceApi = createApi({
     reducerPath: "ecommerceApi",
-    baseQuery:baseQueryWithReAuth,
+    baseQuery: baseQueryWithReAuth,
     endpoints: () => ({}),
 });

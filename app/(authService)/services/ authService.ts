@@ -1,5 +1,10 @@
+// 'use client'
+import {useRouter} from "next/navigation";
+
 
 export async function registerUser(email: string, password: string) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const router = useRouter();
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}user/register/`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -15,23 +20,10 @@ export async function registerUser(email: string, password: string) {
         throw new Error('Failed to register user');
     }
 
-
+    router.push('/activate-confirm-email');
     return response.json();
 }
 
-export async function loginUser(email: string, password: string) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_LOCALHOST}login/`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({email, password})
-    })
 
-    if (!response.ok){
-        throw new Error('Failed to login user');
-    }
-    const data = await response.json();
-    console.log('Data from login with Google:', data);
 
-    return data;
-}
 

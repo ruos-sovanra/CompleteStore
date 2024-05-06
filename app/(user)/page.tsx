@@ -3,6 +3,7 @@ import HeroSection from "@/Components/hero/HeroSection";
 
 import ProductPage from "@/Components/product/productPage";
 import {Metadata} from "next";
+import CategoryComponent from "@/Components/categorypreview/CategoryComponent";
 
 
 
@@ -22,6 +23,7 @@ export default function Home() {
     return (
     <main className="flexs">
         <HeroSection />
+        <CategoryComponent />
         <ProductPage />
     </main>
   );

@@ -103,6 +103,7 @@ const ShopPage = () => {
                 placeholder="Search products"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
             />
             <Transition.Root show={openModal} as={Fragment}>
                 <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef}
@@ -216,7 +217,7 @@ const ShopPage = () => {
                         <tbody className="divide-y divide-gray-200 bg-white">
                         {
                             searchTerm === ''
-                                ? data.map((product: any) => (
+                                ? data?.map((product: any) => (
                                     <tr key={product.id}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                             {product.name}

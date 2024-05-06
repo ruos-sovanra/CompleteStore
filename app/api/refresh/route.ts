@@ -33,11 +33,13 @@ export async function POST(){
         })
     }
 
+
     const data = await response.json();
     const refresh = data?.refresh || null;
     const access = data?.access || null;
     console.log('log form session in refresh',session)
     console.log("Log from Refresh Route",data)
+    console.log("Log from Refresh Route by google",refresh)
 
     const serialized = serialize(cookieName, refresh, {
         httpOnly: true,

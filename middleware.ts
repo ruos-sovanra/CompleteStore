@@ -6,9 +6,10 @@ export function middleware(request: NextRequest) {
 	console.log("=> Request URL: ", request.url);
 	console.log("=> Request Method: ", request.method);
 	const cookies = request.cookies;
-	const session = cookies.get("authjs.session-token");
+	// const session = cookies.get("authjs.session-token");
+	const session = cookies.get("istad-refresh-token");
 
-	if (!session ) {
+	if (!session) {
 		return NextResponse.redirect(new URL("/auth/login", request.url).toString());
 	}
 }

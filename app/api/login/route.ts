@@ -7,7 +7,7 @@ export async function POST(req:NextRequest)
 
     const {email , password} = body;
 
-
+    console.log("Data from login:",body)
 
 
     const response = await fetch(
@@ -16,7 +16,7 @@ export async function POST(req:NextRequest)
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password:password})
+            body: JSON.stringify({ email, password})
         }
 
     );

@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {signOut, useSession} from "next-auth/react";
 import Image from "next/image";
+import {FiShoppingCart} from "react-icons/fi";
+import Link from "next/link";
 
 
 const NavigationBar = () => {
@@ -29,10 +31,15 @@ const NavigationBar = () => {
                     )}
                 </div>
             ) : (
-                <button onClick={() => router.push('/auth/login')}
-                        className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">
-                    Sign In
-                </button>
+                <div className="flex items-center">
+                    <Link href={'/cart'}>
+                        <FiShoppingCart className="mr-2" size={30} />
+                    </Link>
+                    <button onClick={() => router.push('/auth/login')}
+                            className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">
+                        Sign In
+                    </button>
+                </div>
             )}
 
         </nav>

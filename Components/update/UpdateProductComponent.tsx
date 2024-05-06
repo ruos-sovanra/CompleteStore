@@ -84,12 +84,14 @@ const UpdateProductComponent = ({product }:UpdateProductProps) => {
                 },
             });
             // After a successful update, redirect to the shop page
-            router.push('/shop');
+
         } catch (error) {
             console.error('Failed to update product', error); // Log the error
         }
     }
-
+if (isLoading==true) {
+    router.push('/shop');
+}
 
     return (
         <section className="mt-[80px] flex items-center justify-center ">
