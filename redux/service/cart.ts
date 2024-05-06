@@ -3,8 +3,7 @@ import {ecommerceApi} from "@/redux/api";
 
 export const cartApi = ecommerceApi.injectEndpoints({
     endpoints: (builder) => ({
-        // get all products
-        //                        <result type,         args type>
+
         getCart: builder.query<any, { page: number; pageSize: number }>({
             query: ({page = 1, pageSize = 10}) =>
                 `user/orders/?page=${page}&page_size=${pageSize}`,

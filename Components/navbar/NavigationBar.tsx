@@ -1,24 +1,40 @@
-
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {useEffect} from "react";
-import {fetchUserProfile} from "@/redux/feature/userProfile/userProfileSlice";
-import {useAppDispatch} from "@/redux/hook";
+import {signOut, useSession} from "next-auth/react";
+import Image from "next/image";
 
 
 const NavigationBar = () => {
 
-    const dispatch = useAppDispatch();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const { data: session } = useSession();
     const router = useRouter();
-    useEffect(() => {
-        dispatch(fetchUserProfile());
-    }, []);
+
 
 
     return (
         <nav>
-            <button onClick={() => router.push('/auth/login')} className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">
-                Sign In
-            </button>
+
+            {session ? (
+                <div onClick={() => setDropdownOpen(!dropdownOpen)} className="relative">
+                    <Image src={session?.user?.image || 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png'} alt="Profile" className="rounded-full h-8 w-8" width={200} height={200}/>
+                    {dropdownOpen && (
+                        <div
+                            className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
+                            <div className="py-1">
+                                <a onClick={() => signOut()}
+                                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <button onClick={() => router.push('/auth/login')}
+                        className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">
+                    Sign In
+                </button>
+            )}
+
         </nav>
     );
 };

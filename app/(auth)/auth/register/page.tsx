@@ -5,6 +5,8 @@ import style from './style.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormDataRegister } from '@/libs/difinition';
+import {toast, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ValueTypes = {
     email: string;
@@ -61,7 +63,7 @@ const RegisterPage = () => {
                 body: JSON.stringify(values), // Send form values directly
             });
             if (res.ok) {
-                router.push(`/activate-confirm-email/${values.email}`);
+                toast.info('Registration success')
             } else {
                 console.error('Registration failed');
             }
@@ -72,6 +74,18 @@ const RegisterPage = () => {
 
     return (
         <main className={style.container}>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleRegister}>
                 {({ errors, touched }) => (
                     <Form className="bg-gray-100 p-4 rounded-lg w-96">

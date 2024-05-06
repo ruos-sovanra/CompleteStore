@@ -1,54 +1,65 @@
-import {NextRequest, NextResponse} from "next/server";
-import {serialize} from "cookie";
-import {useSession} from "next-auth/react";
-
-
-
-
-
-export async function POST(req: NextRequest) {
+import type { NextRequest} from "next/server";
+import  { NextResponse} from "next/server";
+import { serialize } from "cookie";
+export async function POST(req:NextRequest)
+{
     const body = await req.json();
-    console.log("Log from login",body)
-    const {email, password} = body;
 
-    const session = useSession()
-    const response = await fetch(`${process.env.BASE_URL}user/login/`,{
-        method: "POST",
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify({email, password})
-    })
+    const {email , password} = body;
 
 
 
-    if(!response.ok){
-        return NextResponse.json({
-            message: "Fail to login"
-        },
+
+    const response = await fetch(
+        `${process.env.BASE_URL}user/login/`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password:password})
+        }
+
+    );
+
+    if(!response.ok)
+    {
+        return NextResponse.json(
             {
-                status: response.status
-            })
+                message : "failed to login"
+            },
+            {
+                status:response.status,
+            }
+        );
     }
 
-    console.log("Log from login route for session",session)
 
-    const data = await response.json();
-    const user = data?.user || null;
-    const accessToken = data?.access_token || null;
-    const refreshToken = data?.refresh_token || null;
 
-    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || 'refresh'
-    const serialized = serialize(cookieName, refreshToken,{
+    const data= await response.json();
+    const refreshToken= data?.refresh_token || null;
+    const accessToken= data?.access_token || null;
+    const user= data?.user || null;
+
+    console.log("Data from login:",data)
+
+    const cookieName = process.env?.COOKIE_REFRESH_TOKEN_NAME || "refresh_token"
+    const serialized = serialize  (cookieName,refreshToken,{
         httpOnly:true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        sameSite: "lax"
+        secure:process.env.NODE_ENV==="production",
+        sameSite:'lax',
+        path:"/",
     })
 
     return NextResponse.json({
-        user: user,
-        accessToken: accessToken
-    },{
-        status: response.status,
-        headers: {"Set-Cookie": serialized}
-    })
+            user:user,
+            accessToken:accessToken,
+            refreshToken:refreshToken
+        },
+        {
+            status:response.status,
+            headers:{
+                "Set-Cookie":serialized,
+            }
+        }
+    )
 }

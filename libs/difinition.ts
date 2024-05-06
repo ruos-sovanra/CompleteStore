@@ -57,4 +57,9 @@ export type CartProductType = {
     id: number;
     onClick?: () => void;
 };
+
+export interface Profile {
+    email: string;
+    name: string;
+}
 export const BASE_URL = "https://store.istad.co"
